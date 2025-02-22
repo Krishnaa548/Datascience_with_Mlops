@@ -54,13 +54,17 @@ venv\Scripts\activate     # Windows
 
 bash
 Copy
+
 pip install -r requirements.txt
 Configure environment variables:
 
 bash
 Copy
+
 cp .env.example .env
+
 # Update .env with your AWS/GCP credentials, API keys, etc.
+
 ⚙️ Configuration
 Modify the configs/pipeline.yaml to define:
 
@@ -77,44 +81,58 @@ Example:
 yaml
 Copy
 data:
+
   raw_path: "data/raw"
   processed_path: "data/processed"
+  
 model:
   framework: "tensorflow"
   hyperparameters:
     epochs: 50
     batch_size: 32
+    
+    
 🧪 Usage
-Run the Pipeline Locally
+TO Run the Pipeline Locally
 bash
 Copy
+
 python src/pipeline.py --config configs/pipeline.yaml
+
 Steps:
 Data Processing:
 
 bash
 Copy
+
 python src/run.py --stage preprocess
+
 Model Training:
 
 bash
 Copy
+
 python src/run.py --stage train
 Evaluation & Deployment:
 
 bash
 Copy
+
 python src/run.py --stage deploy
+
 CI/CD Integration
+
 GitHub Actions triggers automated testing on git push.
 
 Merge to main deploys the model to staging via Kubernetes.
 
 📦 Model Deployment
-Docker Example:
 
+Docker Example:
 dockerfile
+
 Copy
+
 FROM tensorflow/tensorflow:2.9.1
 COPY . /app
 WORKDIR /app
@@ -123,6 +141,7 @@ Build and deploy:
 
 bash
 Copy
+
 docker build -t mlops-model:latest .
 docker run -p 5000:5000 mlops-model
 📊 Monitoring & Logging
@@ -130,16 +149,6 @@ Access Grafana dashboard at http://localhost:3000 to view model metrics.
 
 Logs are stored in logs/pipeline.log and forwarded to Elasticsearch.
 
-🤝 Contributing
-Fork the project.
-
-Create a branch: git checkout -b feature/your-feature.
-
-Commit changes: git commit -m 'Add some feature'.
-
-Push to the branch: git push origin feature/your-feature.
-
-Open a Pull Request.
 
 📜 License
 Distributed under the MIT License. See LICENSE for details.
